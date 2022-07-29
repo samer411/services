@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently --kill-others \"ng build --watch --no-delete-output-path\" \"node server.js\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -18,7 +18,16 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "body-parser": "^1.20.0",
+    "bootstrap": "^3.4.1",
+    "cookie-parser": "^1.4.6",
+    "debug": "^4.3.4",
+    "express": "^4.18.1",
+    "jade": "^1.11.0",
+    "jasmine": "^4.3.0",
+    "morgan": "^1.10.0",
     "rxjs": "~7.5.0",
+    "serve-favicon": "^2.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
