@@ -23,13 +23,22 @@ export class EditReaderComponent implements OnInit {
 
   ngOnInit() {
     let readerID: number = parseInt(this.route.snapshot.params['id']);
-    this.selectedReader = this.dataService.getReaderById(readerID);
+    this.dataService.getReaderById(readerID).subscribe({
+      next: (data: Reader) => (this.selectedReader = data),
+    });
     this.currentBadge = this.badgeService.getReaderBagde(
       this.selectedReader.totalMinutesRead
     );
   }
 
   saveChanges() {
-    console.warn('Save reader not yet implemented.');
+    this.dataService.updateReader(this.selectedReader).subscribe({
+      next: (data: void) =>
+        console.log(`${this.selectedReader.name} updated successfully`),
+
+      error: (err: Error) => {
+        console.error(err);
+      },
+    });
   }
 }

@@ -5,6 +5,10 @@ import { LoggerService } from './logger.service';
 import { PlainLoggerService } from './plain-logger.service';
 import { dataServiceFactory } from './data.service.factory';
 import { throwIfAlreadyLoaded } from './module.import.guard';
+import { AddHeaderInterceptor } from './add-header.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { logResponseServiceInterceptor } from './log-response.interceptor';
+import { CacheInterceptor } from './cache.interceptor';
 
 @NgModule({
   declarations: [],
@@ -27,6 +31,13 @@ import { throwIfAlreadyLoaded } from './module.import.guard';
     LoggerService,
     DataService,
     { provide: ErrorHandler, useClass: ErrorHandler },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: logResponseServiceInterceptor,
+      multi: true,
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AddHeaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
   ],
 })
 export class CoreModule {
